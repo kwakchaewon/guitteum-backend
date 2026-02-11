@@ -13,13 +13,11 @@ allowed-tools: Bash
 - type: feat|fix|docs|style|refactor|test|chore|build|ci|perf
 - subject: **한글**, 30자 이내, 마침표 없음, 명사형 종결 (예: "연설문 검색 기능 추가")
 
-AskUserQuestion으로 메시지 확인 후 커밋:
+단일 파일·단순 변경은 바로 커밋. 여러 파일·복잡한 변경은 AskUserQuestion으로 확인 후 커밋:
 
 ```bash
 git commit -m "$(cat <<'EOF'
 <메시지>
-
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 EOF
 )"
 ```
