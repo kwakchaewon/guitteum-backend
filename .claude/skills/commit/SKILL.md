@@ -5,16 +5,15 @@ disable-model-invocation: true
 allowed-tools: Bash
 ---
 
-`git status`와 `git diff`를 병렬 실행하여 변경사항을 파악한다. 없으면 종료.
+`git status`와 `git diff`를 병렬 실행. 변경사항 없으면 종료.
 
-`.env`, `credentials`, `*.key`, `*.pem`, `application-prod.yml`은 스테이징 제외하고 경고. 나머지는 개별 `git add`.
+`.env`, `credentials`, `*.key`, `*.pem`, `application-prod.yml`은 제외 후 경고. 나머지 개별 `git add`.
 
-커밋 메시지 형식: `<type>(<scope>): <subject>`
+메시지: `<type>: <한글 subject>`
 - type: feat|fix|docs|style|refactor|test|chore|build|ci|perf
-- scope: speech, chat, keyword, batch, infra, global, db, config (여러 도메인이면 생략)
-- subject: 영문 imperative, 소문자 시작, 50자 이내, 마침표 없음
+- subject: **한글**, 30자 이내, 마침표 없음, 명사형 종결 (예: "연설문 검색 기능 추가")
 
-메시지를 사용자에게 보여주고 AskUserQuestion으로 확인 후 커밋:
+AskUserQuestion으로 메시지 확인 후 커밋:
 
 ```bash
 git commit -m "$(cat <<'EOF'
@@ -25,4 +24,4 @@ EOF
 )"
 ```
 
-push 금지. --amend 금지. --no-verify 금지.
+push·amend·--no-verify 금지.
