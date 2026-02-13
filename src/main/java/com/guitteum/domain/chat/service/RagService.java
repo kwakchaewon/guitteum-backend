@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class RagService {
 
     private static final int TOP_K = 5;
 
-    public RagResult ask(String query) {
+    public RagResult ask(String query, List<OpenAiClient.ChatMessage> history) {
         // 1. 벡터 검색으로 관련 청크 조회
         List<VectorSearchResponse> searchResults = vectorSearchService.search(query, TOP_K);
 
@@ -36,12 +37,41 @@ public class RagService {
             return new RagResult("관련된 연설문을 찾을 수 없습니다.", List.of());
         }
 
-        // 2. 컨텍스트 구성
+        List<OpenAiClient.ChatMessage> messages = buildMessages(query, searchResults, history);
+
+        // GPT 호출
+        String answer = openAiClient.chat(messages);
+
+        log.info("RAG query='{}', chunks={}, answer length={}", query, searchResults.size(), answer.length());
+
+        return new RagResult(answer, searchResults);
+    }
+
+    public List<VectorSearchResponse> askStream(String query, List<OpenAiClient.ChatMessage> history,
+                                                 Consumer<String> tokenConsumer) {
+        List<VectorSearchResponse> searchResults = vectorSearchService.search(query, TOP_K);
+
+        if (searchResults.isEmpty()) {
+            tokenConsumer.accept("관련된 연설문을 찾을 수 없습니다.");
+            return List.of();
+        }
+
+        List<OpenAiClient.ChatMessage> messages = buildMessages(query, searchResults, history);
+
+        openAiClient.chatStream(messages, tokenConsumer);
+
+        log.info("RAG stream query='{}', chunks={}", query, searchResults.size());
+
+        return searchResults;
+    }
+
+    private List<OpenAiClient.ChatMessage> buildMessages(String query,
+                                                          List<VectorSearchResponse> searchResults,
+                                                          List<OpenAiClient.ChatMessage> history) {
         String context = searchResults.stream()
                 .map(r -> "[연설문 ID: %d, 청크 %d]\n%s".formatted(r.speechId(), r.chunkIndex(), r.content()))
                 .collect(Collectors.joining("\n\n---\n\n"));
 
-        // 3. 프롬프트 구성
         String userMessage = """
                 다음 연설문 내용을 참고하여 질문에 답변하세요.
 
@@ -53,14 +83,9 @@ public class RagService {
 
         List<OpenAiClient.ChatMessage> messages = new ArrayList<>();
         messages.add(new OpenAiClient.ChatMessage("system", SYSTEM_PROMPT));
+        messages.addAll(history);
         messages.add(new OpenAiClient.ChatMessage("user", userMessage));
-
-        // 4. GPT 호출
-        String answer = openAiClient.chat(messages);
-
-        log.info("RAG query='{}', chunks={}, answer length={}", query, searchResults.size(), answer.length());
-
-        return new RagResult(answer, searchResults);
+        return messages;
     }
 
     public record RagResult(

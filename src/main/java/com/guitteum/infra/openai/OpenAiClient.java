@@ -1,13 +1,22 @@
 package com.guitteum.infra.openai;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @Component
@@ -21,6 +30,12 @@ public class OpenAiClient {
 
     @Value("${openai.chat-model}")
     private String chatModel;
+
+    @Value("${openai.api-key}")
+    private String apiKey;
+
+    @Value("${openai.base-url}")
+    private String baseUrl;
 
     public float[] embed(String text) {
         List<float[]> results = embedBatch(List.of(text));
@@ -67,6 +82,46 @@ public class OpenAiClient {
         return content;
     }
 
+    // --- Chat Completion (Streaming) ---
+
+    public void chatStream(List<ChatMessage> messages, Consumer<String> tokenConsumer) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String requestBody = mapper.writeValueAsString(
+                    new StreamChatRequest(chatModel, messages, 0.7, true));
+
+            HttpClient httpClient = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/chat/completions"))
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<java.io.InputStream> response = httpClient.send(
+                    request, HttpResponse.BodyHandlers.ofInputStream());
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(response.body()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("data: ")) {
+                        String data = line.substring(6).trim();
+                        if ("[DONE]".equals(data)) {
+                            break;
+                        }
+                        JsonNode node = mapper.readTree(data);
+                        JsonNode delta = node.path("choices").path(0).path("delta").path("content");
+                        if (!delta.isMissingNode() && !delta.isNull()) {
+                            tokenConsumer.accept(delta.asText());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("OpenAI streaming failed", e);
+        }
+    }
+
     // --- Records ---
 
     record EmbeddingRequest(String model, List<String> input) {}
@@ -78,6 +133,8 @@ public class OpenAiClient {
     public record ChatMessage(String role, String content) {}
 
     record ChatRequest(String model, List<ChatMessage> messages, double temperature) {}
+
+    record StreamChatRequest(String model, List<ChatMessage> messages, double temperature, boolean stream) {}
 
     record ChatCompletionResponse(List<Choice> choices, Usage usage) {}
 
