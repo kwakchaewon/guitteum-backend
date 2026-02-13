@@ -223,31 +223,31 @@ services:
 
 > 목표: 프로젝트 초기화 → MCP 연동 → DB 저장 → 연설문 목록 API
 
-- [ ] Spring Boot 프로젝트 생성 (Spring Initializr)
+- [x] Spring Boot 프로젝트 생성 (Spring Initializr)
   - Spring Web, Spring Data JPA, MySQL Driver, Flyway, Validation, Actuator
   - `build.gradle` 의존성 정의
   - `settings.gradle` 작성
-- [ ] `.gitignore` 작성 (Java/Gradle/IntelliJ 대상)
-- [ ] `docker-compose.yml` 작성 (MySQL 8.0 단독 실행)
-- [ ] `application.yml` / `application-local.yml` 설정
+- [x] `.gitignore` 작성 (Java/Gradle/IntelliJ 대상)
+- [x] `docker-compose.yml` 작성 (MySQL 8.0 단독 실행)
+- [x] `application.yml` / `application-local.yml` 설정
   - MySQL 접속 정보
   - Flyway 설정
   - 서버 포트, 로깅 레벨
-- [ ] Flyway `V1__init_schema.sql` 작성
+- [x] Flyway `V1__init_schema.sql` 작성
   - `speeches` 테이블 (id, title, content, speech_date, event_name, created_at, updated_at)
   - `speech_chunks` 테이블 (id, speech_id, chunk_index, content, vector_id)
-- [ ] `Speech` Entity + `SpeechRepository` 작성
-- [ ] `SpeechService` 작성 (목록 조회, 상세 조회)
-- [ ] `SpeechController` 작성
+- [x] `Speech` Entity + `SpeechRepository` 작성
+- [x] `SpeechService` 작성 (목록 조회, 상세 조회)
+- [x] `SpeechController` 작성
   - `GET /api/speeches` (Pageable)
   - `GET /api/speeches/{id}`
-- [ ] `SpeechResponse`, `SpeechDetailResponse` DTO 작성
+- [x] `SpeechResponse`, `SpeechDetailResponse` DTO 작성
 - [ ] MCP 서버 연동 클라이언트 작성
 - [ ] Spring Batch 기본 구성
   - `SpeechCollectJobConfig` (MCP → MySQL 저장)
 - [ ] 배치 수동 실행 API (`POST /api/batch/collect`)
-- [ ] `GlobalExceptionHandler` 기본 에러 처리
-- [ ] CORS 설정 (`WebConfig`)
+- [x] `GlobalExceptionHandler` 기본 에러 처리
+- [x] CORS 설정 (`WebConfig`)
 
 #### 완료 기준
 - [x] `docker-compose up` → MySQL 정상 기동
