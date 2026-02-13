@@ -37,6 +37,11 @@ public class StatsController {
         return ResponseEntity.ok(keywordService.getMonthlySpeeches());
     }
 
+    @GetMapping("/speeches/category")
+    public ResponseEntity<List<Map<String, Object>>> categoryDistribution() {
+        return ResponseEntity.ok(keywordService.getCategoryDistribution());
+    }
+
     @GetMapping("/summary")
     public ResponseEntity<Map<String, Object>> summary() {
         return ResponseEntity.ok(keywordService.getSummary());

@@ -52,6 +52,17 @@ public class KeywordService {
                 .toList();
     }
 
+    public List<Map<String, Object>> getCategoryDistribution() {
+        return speechRepository.countByCategory().stream()
+                .map(row -> {
+                    Map<String, Object> map = new LinkedHashMap<>();
+                    map.put("category", row[0]);
+                    map.put("count", ((Number) row[1]).longValue());
+                    return map;
+                })
+                .toList();
+    }
+
     public Map<String, Object> getSummary() {
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalSpeeches", speechRepository.count());

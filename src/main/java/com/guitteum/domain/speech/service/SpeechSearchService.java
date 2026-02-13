@@ -35,11 +35,7 @@ public class SpeechSearchService {
             LocalDateTime dateTo,
             Pageable pageable
     ) {
-        if (category != null && !category.isBlank()) {
-            log.info("Category filter '{}' requested but not yet implemented (planned Week 7)", category);
-        }
-
-        NativeQuery searchQuery = buildSearchQuery(query, dateFrom, dateTo, pageable);
+        NativeQuery searchQuery = buildSearchQuery(query, category, dateFrom, dateTo, pageable);
 
         SearchHits<SpeechDocument> searchHits =
                 elasticsearchOperations.search(searchQuery, SpeechDocument.class);
@@ -53,6 +49,7 @@ public class SpeechSearchService {
 
     private NativeQuery buildSearchQuery(
             String query,
+            String category,
             LocalDateTime dateFrom,
             LocalDateTime dateTo,
             Pageable pageable
@@ -65,6 +62,12 @@ public class SpeechSearchService {
                             .fuzziness("AUTO")
                     ));
 
+                    if (category != null && !category.isBlank()) {
+                        b.filter(f -> f.term(t -> t
+                                .field("category")
+                                .value(category)
+                        ));
+                    }
                     if (dateFrom != null) {
                         b.filter(f -> f.range(r -> r
                                 .field("speechDate")
