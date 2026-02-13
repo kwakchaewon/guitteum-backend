@@ -454,5 +454,7 @@ services:
 - IDE: IntelliJ IDEA
 
 ### 데이터 소스
-- MCP 서버: [data-go-mcp-servers](https://github.com/Koomook/data-go-mcp-servers)
-- 대통령 연설문 API 연동
+- MCP 서버: `guitteum-mcp` (커스텀 Python MCP 서버, 별도 저장소)
+  - data.go.kr 정책브리핑 연설문 API 직접 연동
+  - `uvx guitteum-mcp` 또는 로컬 경로로 실행
+  - 상세: `docs/WORK_MCP_PLAN.md` 참조

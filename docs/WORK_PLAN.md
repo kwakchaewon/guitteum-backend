@@ -50,6 +50,16 @@
 | 라우팅 | Vue Router 4.x |
 | 아이콘 | lucide-vue-next |
 
+### MCP Server (guitteum-mcp)
+| 항목 | 기술 |
+|------|------|
+| Language | Python 3.10+ |
+| MCP SDK | mcp[cli] 1.x (FastMCP) |
+| HTTP Client | httpx |
+| XML Parser | xmltodict |
+| Transport | stdio |
+| 배포 | uvx / pip |
+
 ### Infrastructure
 | 항목 | 기술 |
 |------|------|
@@ -703,8 +713,9 @@ services:
 - IDE: IntelliJ IDEA (Backend) + VS Code (Frontend)
 
 ### 데이터 소스
-- MCP 서버: [data-go-mcp-servers](https://github.com/Koomook/data-go-mcp-servers)
-- 대통령 연설문 API 연동
+- MCP 서버: `guitteum-mcp` (커스텀 Python MCP 서버, 별도 저장소)
+  - data.go.kr 정책브리핑 연설문 API 직접 연동
+  - 상세: `docs/WORK_MCP_PLAN.md` 참조
 
 ### 디자인 레퍼런스
 - [Linear.app](https://linear.app/) - 대시보드 및 전체 UI
