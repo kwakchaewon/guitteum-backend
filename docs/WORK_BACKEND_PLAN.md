@@ -313,23 +313,23 @@ services:
 
 > 목표: 질문 → 벡터 검색 → GPT 답변 생성 → 출처 제공
 
-- [ ] Flyway `V4__create_chat_tables.sql` 작성
+- [x] Flyway `V4__create_chat_tables.sql` 작성
   - `chat_sessions`, `chat_messages`, `message_sources` 테이블
-- [ ] `ChatSession`, `ChatMessage`, `MessageSource` Entity 작성
-- [ ] `ChatSessionRepository`, `ChatMessageRepository` 작성
-- [ ] `RagService` 구현 (핵심 로직)
+- [x] `ChatSession`, `ChatMessage`, `MessageSource` Entity 작성
+- [x] `ChatSessionRepository`, `ChatMessageRepository` 작성
+- [x] `RagService` 구현 (핵심 로직)
   1. 질문 텍스트 → OpenAI 임베딩
   2. Qdrant 벡터 검색 (Top 5 유사 청크)
   3. 프롬프트 구성 (System + Context + Question)
   4. OpenAI GPT-4o-mini 호출
   5. 답변 + 출처(speech_id, chunk_id, relevance_score) 반환
-- [ ] 프롬프트 템플릿 작성
+- [x] 프롬프트 템플릿 작성
   - System 프롬프트: "연설문 전문가" 역할 부여
   - 출처 명시 지침, 한국어 답변 지침
-- [ ] `ChatService` 구현 (세션 관리, 메시지 저장)
-- [ ] `ChatController` 작성
+- [x] `ChatService` 구현 (세션 관리, 메시지 저장)
+- [x] `ChatController` 작성
   - `POST /api/chat` (ChatRequest → ChatResponse)
-- [ ] `ChatRequest`, `ChatResponse` DTO 작성
+- [x] `ChatRequest`, `ChatResponse` DTO 작성
 
 #### 완료 기준
 - [x] "윤석열 대통령의 반도체 정책은?" → GPT가 연설문 기반 답변 생성
