@@ -29,11 +29,18 @@ public class Speech {
     @Column(name = "event_name", length = 200)
     private String eventName;
 
+    @Column(length = 50)
+    private String category;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public void updateCategory(String category) {
+        this.category = category;
+    }
 
     @PrePersist
     protected void onCreate() {
