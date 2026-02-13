@@ -394,22 +394,22 @@ services:
 
 > 목표: 연설문 자동 분류 + 챗봇/검색에 카테고리 필터 적용
 
-- [ ] `Category` Enum 정의 (ECONOMY, FOREIGN, WELFARE, DEFENSE, ENVIRONMENT, ETC)
-- [ ] Flyway `V2__add_category_column.sql` 작성
+- [x] `Category` Enum 정의 (ECONOMY, FOREIGN, WELFARE, DEFENSE, ENVIRONMENT, ETC)
+- [x] Flyway `V2__add_category_column.sql` 작성
   - `speeches` 테이블에 `category` VARCHAR(50) 컬럼 추가
-- [ ] 키워드 기반 분류 규칙 정의
+- [x] 키워드 기반 분류 규칙 정의
   - ECONOMY: GDP, 수출, 일자리, 투자, 성장, 경제, 반도체...
   - FOREIGN: 동맹, 협력, 정상회담, 외교, 국제...
   - WELFARE: 민생, 복지, 의료, 교육, 출산...
   - DEFENSE: 안보, 국방, 군사, 미사일...
   - ENVIRONMENT: 기후, 탄소, 에너지, 환경...
-- [ ] `CategoryClassifyJobConfig` 배치 Job 작성
-- [ ] 기존 데이터 일괄 분류 실행
-- [ ] Elasticsearch 인덱스에 category 필드 추가
-- [ ] 검색 API에 카테고리 필터 적용
+- [x] `CategoryClassifyJobConfig` 배치 Job 작성
+- [x] 기존 데이터 일괄 분류 실행
+- [x] Elasticsearch 인덱스에 category 필드 추가
+- [x] 검색 API에 카테고리 필터 적용
 - [ ] RAG 서비스에 카테고리 필터 적용 (Qdrant metadata 필터)
-- [ ] `GET /api/stats/speeches/category` 구현
-- [ ] 배치 수동 실행 API (`POST /api/batch/classify`)
+- [x] `GET /api/stats/speeches/category` 구현
+- [x] 배치 수동 실행 API (`POST /api/batch/classify`)
 
 #### 완료 기준
 - [x] 배치 실행 → 전체 연설문 카테고리 자동 분류
