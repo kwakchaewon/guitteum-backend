@@ -31,6 +31,16 @@ spring:
     job:
       enabled: false
 
+qdrant:
+  host: ${QDRANT_HOST:localhost}
+  port: ${QDRANT_PORT:6334}
+  collection-name: speech_vectors
+
+openai:
+  api-key: ${OPENAI_API_KEY:}
+  model: text-embedding-3-small
+  base-url: https://api.openai.com/v1
+
 server:
   port: 8080
 

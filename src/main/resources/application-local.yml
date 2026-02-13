@@ -11,6 +11,10 @@ spring:
   jpa:
     show-sql: true
 
+qdrant:
+  host: localhost
+  port: 6334
+
 logging:
   level:
     org.hibernate.SQL: DEBUG

@@ -29,6 +29,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
+    implementation 'io.qdrant:client:1.16.2'
+
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     implementation 'org.flywaydb:flyway-core'
