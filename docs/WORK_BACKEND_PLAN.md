@@ -342,17 +342,17 @@ services:
 
 > 목표: SSE 실시간 스트리밍 답변 + 대화 컨텍스트 유지 + 캐싱
 
-- [ ] `docker-compose.yml`에 Redis 추가
-- [ ] `RedisConfig` 작성
-- [ ] SSE 스트리밍 API 구현
+- [x] `docker-compose.yml`에 Redis 추가
+- [x] `RedisConfig` 작성
+- [x] SSE 스트리밍 API 구현
   - `POST /api/chat/stream` → `SseEmitter` 반환
   - 이벤트 타입: `token` (텍스트 조각), `sources` (출처), `done` (완료)
-- [ ] OpenAI 스트리밍 호출 구현 (stream: true)
-- [ ] 멀티턴 대화 구현
+- [x] OpenAI 스트리밍 호출 구현 (stream: true)
+- [x] 멀티턴 대화 구현
   - 최근 3턴 대화 이력을 프롬프트에 포함
   - `GET /api/chat/sessions/{sessionId}/messages`
   - `DELETE /api/chat/sessions/{sessionId}`
-- [ ] Redis 캐싱 적용
+- [x] Redis 캐싱 적용
   - 동일 질문 임베딩 결과 캐싱 (24시간 TTL)
   - 자주 묻는 질문 답변 캐싱
 
