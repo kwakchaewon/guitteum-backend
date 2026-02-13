@@ -284,23 +284,23 @@ services:
 
 > 목표: RAG를 위한 벡터 검색 인프라 완성
 
-- [ ] `docker-compose.yml`에 Qdrant 추가
-- [ ] `QdrantConfig` 작성 (Qdrant Java Client 설정)
-- [ ] `QdrantClient` 래퍼 작성
+- [x] `docker-compose.yml`에 Qdrant 추가
+- [x] `QdrantConfig` 작성 (Qdrant Java Client 설정)
+- [x] `QdrantClient` 래퍼 작성
   - 컬렉션 생성 (speech_vectors, 1536차원, Cosine)
   - 벡터 upsert, 검색 메서드
-- [ ] `OpenAiConfig` 작성 (API 키 환경변수 관리)
-- [ ] `OpenAiClient` 작성
+- [x] `OpenAiConfig` 작성 (API 키 환경변수 관리)
+- [x] `OpenAiClient` 작성
   - `embed(String text)` → float[] (text-embedding-3-small)
-- [ ] 연설문 청킹 로직 구현
+- [x] 연설문 청킹 로직 구현
   - 500자 단위, 100자 오버랩
   - `SpeechChunk` Entity 저장
-- [ ] `EmbeddingJobConfig` 배치 Job 작성
+- [x] `EmbeddingJobConfig` 배치 Job 작성
   - Step 1: 연설문 → 청크 분할 → speech_chunks 저장
   - Step 2: 청크 → OpenAI 임베딩 → Qdrant 저장
-- [ ] 벡터 검색 서비스 구현
+- [x] 벡터 검색 서비스 구현
   - 쿼리 텍스트 → 임베딩 → Qdrant Top-K 검색
-- [ ] 배치 수동 실행 API (`POST /api/batch/embed`)
+- [x] 배치 수동 실행 API (`POST /api/batch/embed`)
 
 #### 완료 기준
 - [x] 배치 실행 → 연설문 100개 벡터화 → Qdrant 저장
