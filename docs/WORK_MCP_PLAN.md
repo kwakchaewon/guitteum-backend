@@ -201,28 +201,28 @@ PRESIDENT_MAP = {
 
 ### Phase 1: 프로젝트 스캐폴딩
 
-- [ ] `guitteum-mcp/` 디렉토리 생성 (별도 저장소)
-- [ ] `pyproject.toml` 작성 (hatchling, 의존성, entry point)
-- [ ] `src/guitteum_mcp/` 패키지 구조 생성
-- [ ] `.gitignore`, `.env.example` 작성
+- [x] `guitteum-mcp/` 디렉토리 생성 (별도 저장소)
+- [x] `pyproject.toml` 작성 (hatchling, 의존성, entry point)
+- [x] `src/guitteum_mcp/` 패키지 구조 생성
+- [x] `.gitignore`, `.env.example` 작성
 
 ### Phase 2: Config + Models
 
-- [ ] `config.py` 구현 (API_KEY 환경변수 로딩)
-- [ ] `models.py` 구현 (Pydantic SpeechData — 백엔드 스키마와 일치)
+- [x] `config.py` 구현 (API_KEY 환경변수 로딩)
+- [x] `models.py` 구현 (Pydantic SpeechData — 백엔드 스키마와 일치)
 
 ### Phase 3: API Client + Mapper + Pagination
 
-- [ ] `api_client.py` 구현 (httpx AsyncClient, data.go.kr API 호출)
-- [ ] `mapper.py` 구현 (XML → SpeechData 변환, HTML 태그 제거, 날짜 파싱)
-- [ ] `pagination.py` 구현 (3일 윈도우 생성기, 가상 페이지네이션)
+- [x] `api_client.py` 구현 (httpx AsyncClient, data.go.kr API 호출)
+- [x] `mapper.py` 구현 (XML → SpeechData 변환, HTML 태그 제거, 날짜 파싱)
+- [x] `pagination.py` 구현 (3일 윈도우 생성기, 가상 페이지네이션)
 
 ### Phase 4: FastMCP 서버 + 도구 구현
 
-- [ ] `server.py` 구현 (FastMCP 인스턴스, 도구 등록)
-- [ ] `list_speeches` 도구 구현
-- [ ] `search_speeches` 도구 구현
-- [ ] `__main__.py` 진입점 작성
+- [x] `server.py` 구현 (FastMCP 인스턴스, 도구 등록)
+- [x] `list_speeches` 도구 구현
+- [x] `search_speeches` 도구 구현
+- [x] `__main__.py` 진입점 작성
 
 ### Phase 5: 통합 테스트
 
