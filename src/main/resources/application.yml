@@ -39,6 +39,7 @@ qdrant:
 openai:
   api-key: ${OPENAI_API_KEY:}
   model: text-embedding-3-small
+  chat-model: gpt-4o-mini
   base-url: https://api.openai.com/v1
 
 server:
