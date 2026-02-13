@@ -22,6 +22,7 @@ public class AdminController {
     private final JobLauncher jobLauncher;
     private final Job embeddingJob;
     private final Job collectJob;
+    private final Job keywordExtractJob;
 
     @PostMapping("/index/speeches")
     public ResponseEntity<Map<String, Object>> reindexSpeeches() {
@@ -43,6 +44,25 @@ public class AdminController {
 
             return ResponseEntity.ok(Map.of(
                     "message", "Speech collect batch started"
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "message", "Batch failed: " + e.getMessage()
+            ));
+        }
+    }
+
+    @PostMapping("/batch/keywords")
+    public ResponseEntity<Map<String, Object>> runKeywordBatch() {
+        try {
+            JobParameters params = new JobParametersBuilder()
+                    .addLong("timestamp", System.currentTimeMillis())
+                    .toJobParameters();
+
+            jobLauncher.run(keywordExtractJob, params);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Keyword extract batch started"
             ));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of(

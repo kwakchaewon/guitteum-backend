@@ -242,10 +242,10 @@ services:
   - `GET /api/speeches` (Pageable)
   - `GET /api/speeches/{id}`
 - [x] `SpeechResponse`, `SpeechDetailResponse` DTO 작성
-- [ ] MCP 서버 연동 클라이언트 작성
-- [ ] Spring Batch 기본 구성
+- [x] MCP 서버 연동 클라이언트 작성
+- [x] Spring Batch 기본 구성
   - `SpeechCollectJobConfig` (MCP → MySQL 저장)
-- [ ] 배치 수동 실행 API (`POST /api/batch/collect`)
+- [x] 배치 수동 실행 API (`POST /api/batch/collect`)
 - [x] `GlobalExceptionHandler` 기본 에러 처리
 - [x] CORS 설정 (`WebConfig`)
 
@@ -367,21 +367,21 @@ services:
 
 > 목표: 키워드 추출 배치 + 통계 API 제공
 
-- [ ] Flyway `V3__create_keywords_table.sql` 작성
+- [x] Flyway `V3__create_keywords_table.sql` 작성
   - `keywords` 테이블 (word, frequency, month, category)
-- [ ] `Keyword` Entity + `KeywordRepository` 작성
-- [ ] 형태소 분석 기반 키워드 추출 로직 구현
+- [x] `Keyword` Entity + `KeywordRepository` 작성
+- [x] 형태소 분석 기반 키워드 추출 로직 구현
   - 불용어 사전 정의
   - 명사 추출 (Nori 활용)
-- [ ] `KeywordExtractJobConfig` 배치 Job 작성
+- [x] `KeywordExtractJobConfig` 배치 Job 작성
   - 연설문 → 형태소 분석 → 키워드 추출 → keywords 테이블 집계
-- [ ] `KeywordService` 구현
-- [ ] `StatsController` 작성
+- [x] `KeywordService` 구현
+- [x] `StatsController` 작성
   - `GET /api/stats/keywords/top?limit=20`
   - `GET /api/stats/keywords/trend?keyword=AI&from=2024-01&to=2024-12`
   - `GET /api/stats/speeches/monthly`
   - `GET /api/stats/summary`
-- [ ] 배치 수동 실행 API (`POST /api/batch/keywords`)
+- [x] 배치 수동 실행 API (`POST /api/batch/keywords`)
 
 #### 완료 기준
 - [x] 배치 실행 → 키워드 추출 및 집계 완료
