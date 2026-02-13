@@ -16,7 +16,7 @@ AI 기반 대통령 연설문 분석 플랫폼 — Backend
 | DB 마이그레이션 | Flyway 10.x |
 | 배치 | Spring Batch |
 | 외부 API | OpenAI (text-embedding-3-small, GPT-4o-mini) |
-| 데이터 수집 | MCP (Model Context Protocol) — data.go.kr 연설문 API |
+| 데이터 수집 | MCP (Model Context Protocol) — [guitteum-mcp](../guitteum-mcp) (커스텀 Python MCP 서버) |
 
 ## 주요 기능
 
@@ -24,6 +24,7 @@ AI 기반 대통령 연설문 분석 플랫폼 — Backend
 - **연설문 전문 검색** — Elasticsearch Nori 형태소 분석, 하이라이팅, 날짜/카테고리 필터
 - **벡터 검색** — OpenAI 임베딩 + Qdrant 유사도 검색 (500자 청킹, 100자 오버랩)
 - **키워드 대시보드** — Nori 기반 키워드 추출, TOP N, 월별 트렌드
+- **카테고리 자동 분류** — 규칙 기반 연설문 분류 (경제/외교/복지/안보/환경), 검색 필터 연동
 - **데이터 수집 파이프라인** — MCP 서버 연동 대통령 연설문 자동 수집
 
 ## 사전 준비
@@ -51,6 +52,29 @@ docker-compose up -d
 # 테스트
 ./gradlew test
 ```
+
+## 데이터 초기화 (배치 실행 순서)
+
+백엔드 기동 후 아래 순서로 배치를 실행하면 전체 데이터가 구성됩니다.
+
+```bash
+# 1. 연설문 수집 (MCP 서버 → DB)
+curl -X POST http://localhost:8080/api/admin/batch/collect
+
+# 2. ES 인덱싱
+curl -X POST http://localhost:8080/api/admin/index/speeches
+
+# 3. 키워드 추출
+curl -X POST http://localhost:8080/api/admin/batch/keywords
+
+# 4. 카테고리 분류
+curl -X POST http://localhost:8080/api/admin/batch/classify
+
+# 5. 벡터 임베딩 (OpenAI API 호출, 시간 소요)
+curl -X POST http://localhost:8080/api/admin/batch/embed
+```
+
+> 1번만 실행해도 연설문 목록/상세 조회가 가능합니다. 2~5번은 검색/통계/챗봇 기능 활성화용입니다.
 
 ## 환경변수
 
@@ -97,6 +121,7 @@ docker-compose up -d
 | GET | `/api/stats/keywords/top` | TOP N 키워드 (limit) |
 | GET | `/api/stats/keywords/trend` | 키워드 월별 트렌드 (keyword, from, to) |
 | GET | `/api/stats/speeches/monthly` | 월별 연설문 개수 |
+| GET | `/api/stats/speeches/category` | 카테고리별 분포 |
 | GET | `/api/stats/summary` | 요약 통계 |
 
 ### 관리자 (배치 실행)
@@ -106,6 +131,7 @@ docker-compose up -d
 | POST | `/api/admin/batch/collect` | 연설문 수집 (MCP) |
 | POST | `/api/admin/batch/embed` | 임베딩 생성 (OpenAI → Qdrant) |
 | POST | `/api/admin/batch/keywords` | 키워드 추출 (Nori) |
+| POST | `/api/admin/batch/classify` | 카테고리 자동 분류 |
 | POST | `/api/admin/index/speeches` | ES 인덱스 재구축 |
 
 ## 패키지 구조
@@ -132,5 +158,6 @@ src/main/java/com/guitteum/
 | 파일 | 설명 |
 |------|------|
 | `V1__init_schema.sql` | speeches, speech_chunks 테이블 |
+| `V2__add_category_column.sql` | speeches 테이블 category 컬럼 추가 |
 | `V3__create_keywords_table.sql` | keywords 테이블 |
 | `V4__create_chat_tables.sql` | chat_sessions, chat_messages, message_sources 테이블 |
