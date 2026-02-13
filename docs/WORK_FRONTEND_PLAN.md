@@ -160,18 +160,18 @@ guitteum-frontend/
 
 > 목표: Vue 프로젝트 초기화 → 레이아웃 → 연설문 목록 화면 출력
 
-- [ ] Vue 3 + Vite 프로젝트 생성 (`guitteum-frontend/`)
-- [ ] Tailwind CSS 설치 및 설정
-- [ ] shadcn-vue 설치 및 초기 설정
+- [x] Vue 3 + Vite 프로젝트 생성 (`guitteum-frontend/`)
+- [x] Tailwind CSS 설치 및 설정
+- [x] shadcn-vue 설치 및 초기 설정
   - 기본 컴포넌트: Button, Card, Input, Badge, Skeleton, Table
-- [ ] Vue Router 설정 (라우트 정의)
-- [ ] Axios 인스턴스 생성 (`api/axios.js`)
-- [ ] `speechApi.js` 작성 (목록, 상세 API 호출)
-- [ ] `AppHeader.vue` 구현 (반응형 네비게이션)
-- [ ] `MobileMenu.vue` 구현 (햄버거 메뉴)
-- [ ] `HomeView.vue` 초안 (간단한 히어로 섹션 + 연설문 목록 테이블)
-- [ ] 기본 CSS 변수 설정 (Linear 스타일 색상 팔레트, 다크모드)
-- [ ] 폰트 설정 (Inter + Pretendard)
+- [x] Vue Router 설정 (라우트 정의)
+- [x] Axios 인스턴스 생성 (`api/axios.js`)
+- [x] `speechApi.js` 작성 (목록, 상세 API 호출)
+- [x] `AppHeader.vue` 구현 (반응형 네비게이션)
+- [x] `MobileMenu.vue` 구현 (햄버거 메뉴)
+- [x] `HomeView.vue` 초안 (간단한 히어로 섹션 + 연설문 목록 테이블)
+- [x] 기본 CSS 변수 설정 (Linear 스타일 색상 팔레트, 다크모드)
+- [x] 폰트 설정 (Inter + Pretendard)
 
 #### 완료 기준
 - [x] 프론트엔드 화면에 연설문 목록 테이블 표시
@@ -183,18 +183,18 @@ guitteum-frontend/
 
 > 목표: 검색 UI 구현 + 연설문 상세 페이지
 
-- [ ] `SearchView.vue` 구현
+- [x] `SearchView.vue` 구현
   - 반응형 검색창 (모바일: 전체 너비, 데스크톱: 중앙 정렬)
   - 검색 결과 카드 리스트
-- [ ] `SearchBar.vue` 컴포넌트
-- [ ] `SearchFilter.vue` 컴포넌트
+- [x] `SearchBar.vue` 컴포넌트
+- [x] `SearchFilter.vue` 컴포넌트
   - 날짜 범위 선택 (모바일: 드롭다운, 데스크톱: 인라인)
   - 카테고리 필터 (칩 형태)
-- [ ] `SearchResult.vue` 컴포넌트 (검색 결과 개별 카드)
-- [ ] Pagination 컴포넌트 (shadcn-vue)
-- [ ] `searchApi.js` 작성
-- [ ] `SpeechDetailView.vue` 구현 (연설문 전문 보기)
-- [ ] 라우터에 검색, 상세 페이지 추가
+- [x] `SearchResult.vue` 컴포넌트 (검색 결과 개별 카드)
+- [x] Pagination 컴포넌트 (shadcn-vue)
+- [x] `searchApi.js` 작성
+- [x] `SpeechDetailView.vue` 구현 (연설문 전문 보기)
+- [x] 라우터에 검색, 상세 페이지 추가
 
 #### 완료 기준
 - [x] 검색 결과 카드 리스트 정상 렌더링
@@ -207,11 +207,11 @@ guitteum-frontend/
 
 > 목표: 전역 상태 관리 + 로딩/에러 UX 완성
 
-- [ ] Pinia 스토어 기본 구조 작성 (`speechStore.js`)
-- [ ] 로딩 상태 관리 (전역 로딩 인디케이터)
-- [ ] Skeleton 컴포넌트 적용 (목록, 상세 페이지)
-- [ ] Toast 알림 구현 (에러 핸들링)
-- [ ] 검색 페이지 UX 개선 (디바운스 등)
+- [x] Pinia 스토어 기본 구조 작성 (`speechStore.js`)
+- [x] 로딩 상태 관리 (전역 로딩 인디케이터)
+- [x] Skeleton 컴포넌트 적용 (목록, 상세 페이지)
+- [x] Toast 알림 구현 (에러 핸들링)
+- [x] 검색 페이지 UX 개선 (디바운스 등)
 
 #### 완료 기준
 - [x] Skeleton 로딩 UI 정상 표시
@@ -224,21 +224,21 @@ guitteum-frontend/
 
 > 목표: 채팅 인터페이스 구현 (JSON 응답 기반)
 
-- [ ] `ChatView.vue` 구현
+- [x] `ChatView.vue` 구현
   - 반응형 채팅 레이아웃 (모바일: 전체 화면, 데스크톱: 중앙 정렬)
   - 메시지 목록 영역 (스크롤)
   - 입력창 + 전송 버튼
-- [ ] `ChatBubble.vue` 구현
+- [x] `ChatBubble.vue` 구현
   - 사용자 메시지: 오른쪽 정렬, primary 색상
   - AI 메시지: 왼쪽 정렬, muted 색상
   - 메시지 너비: 모바일 85%, 데스크톱 70%
-- [ ] `SourceCard.vue` 구현
+- [x] `SourceCard.vue` 구현
   - Collapsible 출처 카드 (shadcn-vue Collapsible)
   - 연설문 제목, 날짜 표시 → 클릭 시 상세 페이지 이동
-- [ ] `ChatInput.vue` 구현 (Enter 전송, 버튼 전송)
-- [ ] `chatApi.js` 작성
-- [ ] `chatStore.js` 구현 (세션 관리, 메시지 목록)
-- [ ] 라우터에 챗봇 페이지 추가
+- [x] `ChatInput.vue` 구현 (Enter 전송, 버튼 전송)
+- [x] `chatApi.js` 작성
+- [x] `chatStore.js` 구현 (세션 관리, 메시지 목록)
+- [x] 라우터에 챗봇 페이지 추가
 
 #### 완료 기준
 - [x] 채팅 UI에서 질문 → 답변 표시
@@ -251,18 +251,18 @@ guitteum-frontend/
 
 > 목표: SSE 실시간 스트리밍 UI + 대화 히스토리
 
-- [ ] `useSSE.js` composable 구현
+- [x] `useSSE.js` composable 구현
   - EventSource API로 SSE 연결
   - `token` 이벤트 → 메시지에 점진적 추가
   - `sources` 이벤트 → 출처 카드 렌더링
   - `done` 이벤트 → 스트리밍 종료 처리
-- [ ] 타이핑 효과 구현 (CSS 애니메이션)
-- [ ] "새 대화" 버튼 구현 (세션 초기화)
-- [ ] 대화 히스토리 사이드 패널
+- [x] 타이핑 효과 구현 (CSS 애니메이션)
+- [x] "새 대화" 버튼 구현 (세션 초기화)
+- [x] 대화 히스토리 사이드 패널
   - 모바일: Sheet (슬라이드 인)
   - 데스크톱: Sidebar
-- [ ] 로딩 인디케이터 (AI 답변 생성 중)
-- [ ] 에러 처리 (네트워크 오류, 타임아웃)
+- [x] 로딩 인디케이터 (AI 답변 생성 중)
+- [x] 에러 처리 (네트워크 오류, 타임아웃)
 
 #### 완료 기준
 - [x] 질문 입력 → 답변이 한 글자씩 스트리밍 출력
@@ -275,23 +275,23 @@ guitteum-frontend/
 
 > 목표: 연설문 통계 시각화 (워드클라우드, 차트)
 
-- [ ] Apache ECharts 설치 및 설정
-- [ ] `HomeView.vue` 대시보드 리뉴얼 (Linear 스타일)
+- [x] Apache ECharts 설치 및 설정
+- [x] `HomeView.vue` 대시보드 리뉴얼 (Linear 스타일)
   - 히어로 섹션 (AI 질문 입력창)
   - 통계 요약 카드 4개 (총 연설문, 주요 키워드, AI 질문 수, 평균 응답)
   - 차트 그리드
-- [ ] `StatCard.vue` 구현 (큰 숫자 + 트렌드 표시)
-- [ ] `WordCloud.vue` 구현 (ECharts wordCloud)
+- [x] `StatCard.vue` 구현 (큰 숫자 + 트렌드 표시)
+- [x] `WordCloud.vue` 구현 (ECharts wordCloud)
   - 키워드 클릭 → 관련 연설문 검색 페이지 이동
-- [ ] `LineChart.vue` 구현 (월별 연설 추이)
+- [x] `LineChart.vue` 구현 (월별 연설 추이)
   - Linear 스타일 그라디언트 area
   - 6개월/1년 토글
-- [ ] `PieChart.vue` 구현 (카테고리별 분포)
+- [x] `PieChart.vue` 구현 (카테고리별 분포)
   - 범례 리스트 (Linear 스타일)
-- [ ] `statsApi.js` 작성
-- [ ] `statsStore.js` 구현
-- [ ] 반응형 차트 (모바일: 1열, 태블릿 이상: 2열 그리드)
-- [ ] 터치 제스처 지원 (차트 확대/축소)
+- [x] `statsApi.js` 작성
+- [x] `statsStore.js` 구현
+- [x] 반응형 차트 (모바일: 1열, 태블릿 이상: 2열 그리드)
+- [x] 터치 제스처 지원 (차트 확대/축소)
 
 #### 완료 기준
 - [x] 대시보드에 TOP 20 키워드 워드클라우드 표시
@@ -305,14 +305,14 @@ guitteum-frontend/
 
 > 목표: 카테고리 필터를 챗봇/검색/대시보드에 통합
 
-- [ ] `CategoryFilter.vue` 구현
+- [x] `CategoryFilter.vue` 구현
   - 모바일: 가로 스크롤 칩 (Badge)
   - 데스크톱: 전체 표시
-- [ ] 챗봇 페이지에 카테고리 필터 추가
+- [x] 챗봇 페이지에 카테고리 필터 추가
   - 카테고리 선택 → 해당 분야만 검색하여 답변
-- [ ] 검색 페이지 카테고리 필터 연동
-- [ ] 대시보드 파이 차트 데이터 연동 (실제 API)
-- [ ] 연설문 상세 페이지에 카테고리 Badge 표시
+- [x] 검색 페이지 카테고리 필터 연동
+- [x] 대시보드 파이 차트 데이터 연동 (실제 API)
+- [x] 연설문 상세 페이지에 카테고리 Badge 표시
 
 #### 완료 기준
 - [x] 챗봇에서 카테고리 선택 후 질문 가능
