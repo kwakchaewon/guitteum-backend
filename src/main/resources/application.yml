@@ -25,6 +25,11 @@ spring:
     connection-timeout: 5s
     socket-timeout: 30s
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
   batch:
     jdbc:
       initialize-schema: always
