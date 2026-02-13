@@ -1,7 +1,7 @@
 # 귀띔 (Guitteum) Backend - Claude Code 가이드
 
 AI 기반 대통령 연설문 분석 플랫폼 (Spring Boot).
-상세 스펙은 `WORK_BACKEND_PLAN.md`, `guitteum_proposal.md` 참조.
+상세 스펙은 `docs/WORK_BACKEND_PLAN.md`, `docs/guitteum_proposal.md` 참조.
 
 ## 기술 스택
 
