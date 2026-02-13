@@ -32,6 +32,8 @@ dependencies {
 
     implementation 'io.qdrant:client:1.16.2'
 
+    implementation 'io.modelcontextprotocol.sdk:mcp:0.17.2'
+
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     implementation 'org.flywaydb:flyway-core'

@@ -41,6 +41,11 @@ qdrant:
   port: ${QDRANT_PORT:6334}
   collection-name: speech_vectors
 
+data-go:
+  api-key: ${DATA_GO_API_KEY:}
+  mcp-command: uvx
+  mcp-args: data-go-mcp.presidential-speeches@latest
+
 openai:
   api-key: ${OPENAI_API_KEY:}
   model: text-embedding-3-small

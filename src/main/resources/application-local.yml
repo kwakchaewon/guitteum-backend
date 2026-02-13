@@ -16,6 +16,11 @@ spring:
   jpa:
     show-sql: true
 
+data-go:
+  api-key: ${DATA_GO_API_KEY:}
+  mcp-command: uvx
+  mcp-args: data-go-mcp.presidential-speeches@latest
+
 qdrant:
   host: localhost
   port: 6334
