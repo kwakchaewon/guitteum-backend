@@ -1,17 +1,24 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: guitteum-mysql
+  elasticsearch:
+    build:
+      context: ./docker/elasticsearch
+      dockerfile: Dockerfile
+    container_name: guitteum-elasticsearch
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: guitteum
-      MYSQL_USER: guitteum
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-guitteum}
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - cluster.name=guitteum-cluster
     ports:
-      - "3306:3306"
+      - "9200:9200"
     volumes:
-      - mysql-data:/var/lib/mysql
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      - es-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 volumes:
-  mysql-data:
+  es-data:

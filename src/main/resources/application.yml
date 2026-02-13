@@ -20,6 +20,11 @@ spring:
     encoding: UTF-8
     validate-on-migrate: true
 
+  elasticsearch:
+    uris: ${ELASTICSEARCH_URI:http://localhost:9200}
+    connection-timeout: 5s
+    socket-timeout: 30s
+
   batch:
     jdbc:
       initialize-schema: always

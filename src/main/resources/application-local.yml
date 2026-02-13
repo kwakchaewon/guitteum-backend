@@ -5,6 +5,9 @@ spring:
     password: ${MYSQL_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  elasticsearch:
+    uris: http://localhost:9200
+
   jpa:
     show-sql: true
 
@@ -13,3 +16,4 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     org.flywaydb: DEBUG
+    org.springframework.data.elasticsearch: DEBUG
