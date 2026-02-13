@@ -261,17 +261,17 @@ services:
 
 > 목표: 한국어 형태소 분석 기반 키워드 검색 기능 완성
 
-- [ ] `docker-compose.yml`에 Elasticsearch 8.x 추가
+- [x] `docker-compose.yml`에 Elasticsearch 8.x 추가
   - Nori 플러그인 설치 스크립트/Dockerfile
-- [ ] `ElasticsearchConfig` 작성
-- [ ] `SpeechDocument` 작성 (ES 인덱스 매핑)
+- [x] `ElasticsearchConfig` 작성
+- [x] `SpeechDocument` 작성 (ES 인덱스 매핑)
   - nori_tokenizer 기반 korean 분석기 설정
-- [ ] `SpeechSearchRepository` 작성 (Spring Data Elasticsearch)
-- [ ] 배치에 ES 동기화 스텝 추가 (MySQL → Elasticsearch)
-- [ ] `SearchController` 작성
+- [x] `SpeechSearchRepository` 작성 (Spring Data Elasticsearch)
+- [x] 배치에 ES 동기화 스텝 추가 (MySQL → Elasticsearch)
+- [x] `SearchController` 작성
   - `GET /api/speeches/search?query=&category=&dateFrom=&dateTo=&page=&size=`
-- [ ] 검색 결과 하이라이팅 처리
-- [ ] Pagination 응답 형식 통일 (Page 객체)
+- [x] 검색 결과 하이라이팅 처리
+- [x] Pagination 응답 형식 통일 (Page 객체)
 
 #### 완료 기준
 - [x] "경제 성장" 검색 → Nori 형태소 분석으로 관련 연설문 검색
