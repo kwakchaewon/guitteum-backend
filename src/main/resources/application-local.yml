@@ -18,8 +18,8 @@ spring:
 
 data-go:
   api-key: ${DATA_GO_API_KEY:}
-  mcp-command: uvx
-  mcp-args: data-go-mcp.presidential-speeches@latest
+  mcp-command: py
+  mcp-args: -m guitteum_mcp
 
 qdrant:
   host: localhost

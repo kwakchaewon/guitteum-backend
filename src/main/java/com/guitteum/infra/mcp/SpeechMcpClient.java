@@ -107,19 +107,29 @@ public class SpeechMcpClient {
 
     private McpSyncClient createClient() {
         ServerParameters params = ServerParameters.builder(mcpCommand)
-                .args(mcpArgs)
-                .addEnvVar("API_KEY", apiKey)
+                .args(mcpArgs.split("\\s+"))
+                .addEnvVar("DATA_GO_API_KEY", apiKey)
                 .build();
 
         StdioClientTransport transport = new StdioClientTransport(params, new JacksonMcpJsonMapper(new ObjectMapper()));
 
         return McpClient.sync(transport)
-                .requestTimeout(Duration.ofSeconds(30))
+                .requestTimeout(Duration.ofMinutes(10))
                 .build();
     }
 
     private List<SpeechData> parseResult(CallToolResult result) {
         try {
+            if (Boolean.TRUE.equals(result.isError())) {
+                String errorText = result.content().stream()
+                        .filter(c -> c instanceof McpSchema.TextContent)
+                        .map(c -> ((McpSchema.TextContent) c).text())
+                        .findFirst()
+                        .orElse("(에러 내용 없음)");
+                log.error("MCP 도구 에러: {}", errorText);
+                return List.of();
+            }
+
             String text = result.content().stream()
                     .filter(c -> c instanceof McpSchema.TextContent)
                     .map(c -> ((McpSchema.TextContent) c).text())
