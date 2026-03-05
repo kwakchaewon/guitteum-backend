@@ -27,6 +27,7 @@ import java.util.function.Consumer;
 public class GeminiClient {
 
     private final RestClient geminiRestClient;
+    private final RestClient geminiEmbeddingRestClient;
 
     @Value("${gemini.api-key}")
     private String apiKey;
@@ -65,7 +66,7 @@ public class GeminiClient {
 
         BatchEmbedRequest request = new BatchEmbedRequest(requests);
 
-        BatchEmbedResponse response = geminiRestClient.post()
+        BatchEmbedResponse response = geminiEmbeddingRestClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/models/{model}:batchEmbedContents")
                         .queryParam("key", apiKey)
