@@ -26,6 +26,7 @@ public class SearchController {
     public ResponseEntity<Page<SpeechSearchResponse>> search(
             @RequestParam String query,
             @RequestParam(required = false) String category,
+            @RequestParam(required = false) String speaker,
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
             @RequestParam(required = false)
@@ -33,7 +34,7 @@ public class SearchController {
             @PageableDefault(size = 20) Pageable pageable
     ) {
         return ResponseEntity.ok(
-                speechSearchService.search(query, category, dateFrom, dateTo, pageable)
+                speechSearchService.search(query, category, speaker, dateFrom, dateTo, pageable)
         );
     }
 }

@@ -29,6 +29,9 @@ public class Speech {
     @Column(name = "event_name", length = 200)
     private String eventName;
 
+    @Column(length = 100)
+    private String speaker;
+
     @Column(length = 50)
     private String category;
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record SpeechData(
         String id,
         String president,
+        String speaker,
         String title,
         String content,
         String date,

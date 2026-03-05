@@ -31,11 +31,12 @@ public class SpeechSearchService {
     public Page<SpeechSearchResponse> search(
             String query,
             String category,
+            String speaker,
             LocalDateTime dateFrom,
             LocalDateTime dateTo,
             Pageable pageable
     ) {
-        NativeQuery searchQuery = buildSearchQuery(query, category, dateFrom, dateTo, pageable);
+        NativeQuery searchQuery = buildSearchQuery(query, category, speaker, dateFrom, dateTo, pageable);
 
         SearchHits<SpeechDocument> searchHits =
                 elasticsearchOperations.search(searchQuery, SpeechDocument.class);
@@ -50,6 +51,7 @@ public class SpeechSearchService {
     private NativeQuery buildSearchQuery(
             String query,
             String category,
+            String speaker,
             LocalDateTime dateFrom,
             LocalDateTime dateTo,
             Pageable pageable
@@ -66,6 +68,12 @@ public class SpeechSearchService {
                         b.filter(f -> f.term(t -> t
                                 .field("category")
                                 .value(category)
+                        ));
+                    }
+                    if (speaker != null && !speaker.isBlank()) {
+                        b.filter(f -> f.term(t -> t
+                                .field("speaker")
+                                .value(speaker)
                         ));
                     }
                     if (dateFrom != null) {
@@ -118,6 +126,7 @@ public class SpeechSearchService {
                 doc.getSpeechDate(),
                 doc.getEventName(),
                 doc.getCategory(),
+                doc.getSpeaker(),
                 titleHighlights.isEmpty() ? Collections.emptyList() : titleHighlights,
                 contentHighlights.isEmpty() ? Collections.emptyList() : contentHighlights
         );

@@ -10,6 +10,7 @@ public record SpeechDetailResponse(
         String content,
         LocalDateTime speechDate,
         String eventName,
+        String speaker,
         LocalDateTime createdAt
 ) {
     public static SpeechDetailResponse from(Speech speech) {
@@ -19,6 +20,7 @@ public record SpeechDetailResponse(
                 speech.getContent(),
                 speech.getSpeechDate(),
                 speech.getEventName(),
+                speech.getSpeaker(),
                 speech.getCreatedAt()
         );
     }

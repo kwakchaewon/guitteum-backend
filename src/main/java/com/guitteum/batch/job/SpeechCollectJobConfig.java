@@ -100,6 +100,7 @@ public class SpeechCollectJobConfig {
                 .content(content)
                 .speechDate(speechDate)
                 .eventName(eventName)
+                .speaker(data.speaker())
                 .build();
     }
 

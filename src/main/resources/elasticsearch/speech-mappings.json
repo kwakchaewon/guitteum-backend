@@ -30,6 +30,9 @@
     "category": {
       "type": "keyword"
     },
+    "speaker": {
+      "type": "keyword"
+    },
     "createdAt": {
       "type": "date",
       "format": "uuuu-MM-dd'T'HH:mm:ss||epoch_millis"

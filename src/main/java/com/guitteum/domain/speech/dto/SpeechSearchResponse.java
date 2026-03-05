@@ -9,6 +9,7 @@ public record SpeechSearchResponse(
         LocalDateTime speechDate,
         String eventName,
         String category,
+        String speaker,
         List<String> titleHighlights,
         List<String> contentHighlights
 ) {

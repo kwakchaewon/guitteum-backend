@@ -36,5 +36,8 @@ public class SpeechDocument {
     @Field(type = FieldType.Keyword)
     private String category;
 
+    @Field(type = FieldType.Keyword)
+    private String speaker;
+
     private LocalDateTime createdAt;
 }

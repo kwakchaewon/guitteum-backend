@@ -8,14 +8,16 @@ public record SpeechResponse(
         Long id,
         String title,
         LocalDateTime speechDate,
-        String eventName
+        String eventName,
+        String speaker
 ) {
     public static SpeechResponse from(Speech speech) {
         return new SpeechResponse(
                 speech.getId(),
                 speech.getTitle(),
                 speech.getSpeechDate(),
-                speech.getEventName()
+                speech.getEventName(),
+                speech.getSpeaker()
         );
     }
 }

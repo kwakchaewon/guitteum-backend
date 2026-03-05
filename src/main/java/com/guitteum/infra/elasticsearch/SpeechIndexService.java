@@ -52,6 +52,7 @@ public class SpeechIndexService {
                 .speechDate(speech.getSpeechDate())
                 .eventName(speech.getEventName())
                 .category(speech.getCategory())
+                .speaker(speech.getSpeaker())
                 .createdAt(speech.getCreatedAt())
                 .build();
     }
