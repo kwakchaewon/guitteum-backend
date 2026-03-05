@@ -11,4 +11,6 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     List<ChatMessage> findBySessionOrderByCreatedAtAsc(ChatSession session);
 
     List<ChatMessage> findTop6BySessionOrderByCreatedAtDesc(ChatSession session);
+
+    long countByRole(ChatMessage.Role role);
 }

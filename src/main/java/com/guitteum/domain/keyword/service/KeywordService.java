@@ -1,5 +1,7 @@
 package com.guitteum.domain.keyword.service;
 
+import com.guitteum.domain.chat.entity.ChatMessage;
+import com.guitteum.domain.chat.repository.ChatMessageRepository;
 import com.guitteum.domain.keyword.entity.Keyword;
 import com.guitteum.domain.keyword.repository.KeywordRepository;
 import com.guitteum.domain.speech.repository.SpeechRepository;
@@ -18,6 +20,7 @@ public class KeywordService {
 
     private final KeywordRepository keywordRepository;
     private final SpeechRepository speechRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
     public List<Map<String, Object>> getTopKeywords(int limit) {
         return keywordRepository.findTopKeywords(limit).stream()
@@ -65,8 +68,9 @@ public class KeywordService {
 
     public Map<String, Object> getSummary() {
         Map<String, Object> summary = new LinkedHashMap<>();
-        summary.put("totalSpeeches", speechRepository.count());
-        summary.put("totalKeywords", keywordRepository.countDistinctWords());
+        summary.put("totalSpeechCount", speechRepository.count());
+        summary.put("totalKeywordCount", keywordRepository.countDistinctWords());
+        summary.put("totalChatQuestions", chatMessageRepository.countByRole(ChatMessage.Role.USER));
         return summary;
     }
 }
