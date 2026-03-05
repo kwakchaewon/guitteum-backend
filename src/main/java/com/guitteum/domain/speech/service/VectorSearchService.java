@@ -1,7 +1,7 @@
 package com.guitteum.domain.speech.service;
 
 import com.guitteum.domain.speech.dto.VectorSearchResponse;
-import com.guitteum.infra.openai.OpenAiClient;
+import com.guitteum.infra.gemini.GeminiClient;
 import com.guitteum.infra.qdrant.QdrantClientWrapper;
 import io.qdrant.client.grpc.Points;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class VectorSearchService {
     private static final Duration EMBEDDING_CACHE_TTL = Duration.ofHours(24);
     private static final String CACHE_KEY_PREFIX = "embed:";
 
-    private final OpenAiClient openAiClient;
+    private final GeminiClient geminiClient;
     private final QdrantClientWrapper qdrantClientWrapper;
     private final RedisTemplate<String, byte[]> redisTemplate;
 
@@ -47,7 +47,7 @@ public class VectorSearchService {
             return bytesToFloats(cached);
         }
 
-        float[] embedding = openAiClient.embed(query);
+        float[] embedding = geminiClient.embed(query);
         redisTemplate.opsForValue().set(cacheKey, floatsToBytes(embedding), EMBEDDING_CACHE_TTL);
         log.debug("Embedding cache miss, stored: key={}", cacheKey);
         return embedding;

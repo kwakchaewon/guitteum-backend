@@ -2,7 +2,7 @@ package com.guitteum.domain.chat.service;
 
 import com.guitteum.domain.speech.dto.VectorSearchResponse;
 import com.guitteum.domain.speech.service.VectorSearchService;
-import com.guitteum.infra.openai.OpenAiClient;
+import com.guitteum.infra.gemini.GeminiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class RagService {
 
     private final VectorSearchService vectorSearchService;
-    private final OpenAiClient openAiClient;
+    private final GeminiClient geminiClient;
 
     private static final String SYSTEM_PROMPT = """
             당신은 대한민국 대통령 연설문 전문가입니다.
@@ -29,7 +29,7 @@ public class RagService {
 
     private static final int TOP_K = 5;
 
-    public RagResult ask(String query, List<OpenAiClient.ChatMessage> history) {
+    public RagResult ask(String query, List<GeminiClient.ChatMessage> history) {
         // 1. 벡터 검색으로 관련 청크 조회
         List<VectorSearchResponse> searchResults = vectorSearchService.search(query, TOP_K);
 
@@ -37,17 +37,16 @@ public class RagService {
             return new RagResult("관련된 연설문을 찾을 수 없습니다.", List.of());
         }
 
-        List<OpenAiClient.ChatMessage> messages = buildMessages(query, searchResults, history);
+        List<GeminiClient.ChatMessage> messages = buildMessages(query, searchResults, history);
 
-        // GPT 호출
-        String answer = openAiClient.chat(messages);
+        String answer = geminiClient.chat(messages);
 
         log.info("RAG query='{}', chunks={}, answer length={}", query, searchResults.size(), answer.length());
 
         return new RagResult(answer, searchResults);
     }
 
-    public List<VectorSearchResponse> askStream(String query, List<OpenAiClient.ChatMessage> history,
+    public List<VectorSearchResponse> askStream(String query, List<GeminiClient.ChatMessage> history,
                                                  Consumer<String> tokenConsumer) {
         List<VectorSearchResponse> searchResults = vectorSearchService.search(query, TOP_K);
 
@@ -56,18 +55,18 @@ public class RagService {
             return List.of();
         }
 
-        List<OpenAiClient.ChatMessage> messages = buildMessages(query, searchResults, history);
+        List<GeminiClient.ChatMessage> messages = buildMessages(query, searchResults, history);
 
-        openAiClient.chatStream(messages, tokenConsumer);
+        geminiClient.chatStream(messages, tokenConsumer);
 
         log.info("RAG stream query='{}', chunks={}", query, searchResults.size());
 
         return searchResults;
     }
 
-    private List<OpenAiClient.ChatMessage> buildMessages(String query,
+    private List<GeminiClient.ChatMessage> buildMessages(String query,
                                                           List<VectorSearchResponse> searchResults,
-                                                          List<OpenAiClient.ChatMessage> history) {
+                                                          List<GeminiClient.ChatMessage> history) {
         String context = searchResults.stream()
                 .map(r -> "[연설문 ID: %d, 청크 %d]\n%s".formatted(r.speechId(), r.chunkIndex(), r.content()))
                 .collect(Collectors.joining("\n\n---\n\n"));
@@ -81,10 +80,10 @@ public class RagService {
                 [질문]
                 %s""".formatted(context, query);
 
-        List<OpenAiClient.ChatMessage> messages = new ArrayList<>();
-        messages.add(new OpenAiClient.ChatMessage("system", SYSTEM_PROMPT));
+        List<GeminiClient.ChatMessage> messages = new ArrayList<>();
+        messages.add(new GeminiClient.ChatMessage("system", SYSTEM_PROMPT));
         messages.addAll(history);
-        messages.add(new OpenAiClient.ChatMessage("user", userMessage));
+        messages.add(new GeminiClient.ChatMessage("user", userMessage));
         return messages;
     }
 

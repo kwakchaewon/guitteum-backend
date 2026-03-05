@@ -2,7 +2,7 @@ package com.guitteum.batch.writer;
 
 import com.guitteum.domain.speech.entity.SpeechChunk;
 import com.guitteum.domain.speech.repository.SpeechChunkRepository;
-import com.guitteum.infra.openai.OpenAiClient;
+import com.guitteum.infra.gemini.GeminiClient;
 import com.guitteum.infra.qdrant.QdrantClientWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.List;
 public class EmbeddingWriter implements ItemWriter<List<SpeechChunk>> {
 
     private final SpeechChunkRepository speechChunkRepository;
-    private final OpenAiClient openAiClient;
+    private final GeminiClient geminiClient;
     private final QdrantClientWrapper qdrantClientWrapper;
 
     @Override
@@ -33,7 +33,7 @@ public class EmbeddingWriter implements ItemWriter<List<SpeechChunk>> {
             List<String> texts = savedChunks.stream()
                     .map(SpeechChunk::getContent)
                     .toList();
-            List<float[]> embeddings = openAiClient.embedBatch(texts);
+            List<float[]> embeddings = geminiClient.embedBatch(texts);
 
             // 3. Qdrant에 벡터 저장
             for (int i = 0; i < savedChunks.size(); i++) {

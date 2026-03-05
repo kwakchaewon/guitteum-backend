@@ -8,7 +8,7 @@ import com.guitteum.domain.chat.entity.MessageSource;
 import com.guitteum.domain.chat.repository.ChatMessageRepository;
 import com.guitteum.domain.chat.repository.ChatSessionRepository;
 import com.guitteum.domain.speech.dto.VectorSearchResponse;
-import com.guitteum.infra.openai.OpenAiClient;
+import com.guitteum.infra.gemini.GeminiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class ChatService {
         ChatSession session = getOrCreateSession(request.sessionId());
 
         // 2. 대화 이력 로드
-        List<OpenAiClient.ChatMessage> history = loadHistory(session);
+        List<GeminiClient.ChatMessage> history = loadHistory(session);
 
         // 3. 사용자 메시지 저장
         ChatMessage userMessage = ChatMessage.builder()
@@ -85,7 +85,7 @@ public class ChatService {
             try {
                 // 1. 세션 조회/생성 + 이력 로드 + 사용자 메시지 저장
                 ChatSession session = getOrCreateSession(request.sessionId());
-                List<OpenAiClient.ChatMessage> history = loadHistory(session);
+                List<GeminiClient.ChatMessage> history = loadHistory(session);
 
                 ChatMessage userMessage = ChatMessage.builder()
                         .session(session)
@@ -141,7 +141,7 @@ public class ChatService {
         });
     }
 
-    private List<OpenAiClient.ChatMessage> loadHistory(ChatSession session) {
+    private List<GeminiClient.ChatMessage> loadHistory(ChatSession session) {
         List<ChatMessage> recent = chatMessageRepository.findTop6BySessionOrderByCreatedAtDesc(session);
         if (recent.isEmpty()) {
             return List.of();
@@ -149,7 +149,7 @@ public class ChatService {
         List<ChatMessage> ordered = new ArrayList<>(recent);
         Collections.reverse(ordered);
         return ordered.stream()
-                .map(m -> new OpenAiClient.ChatMessage(m.getRole().name().toLowerCase(), m.getContent()))
+                .map(m -> new GeminiClient.ChatMessage(m.getRole().name().toLowerCase(), m.getContent()))
                 .toList();
     }
 
