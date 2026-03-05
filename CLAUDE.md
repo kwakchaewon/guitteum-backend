@@ -1,11 +1,11 @@
 # 귀띔 (Guitteum) Backend - Claude Code 가이드
 
-AI 기반 대통령 연설문 분석 플랫폼 (Spring Boot).
+AI 기반 정책 브리핑 연설문 분석 플랫폼 (Spring Boot). 문화체육관광부_정책브리핑_연설문_API 기반.
 상세 스펙은 `docs/WORK_BACKEND_PLAN.md`, `docs/guitteum_proposal.md` 참조.
 
 ## 기술 스택
 
-Java 17 / Spring Boot 3.2.x / Gradle 8.x / MySQL 8.0 / Flyway 10.x / Redis 7.x / Elasticsearch 8.x + Nori / Qdrant 1.7.x / OpenAI API / Spring Batch
+Java 17 / Spring Boot 3.2.x / Gradle 8.x / MySQL 8.0 / Flyway 10.x / Redis 7.x / Elasticsearch 8.x + Nori / Qdrant 1.7.x / Google Gemini API / Spring Batch
 
 ## 빌드 & 실행
 
@@ -25,7 +25,7 @@ src/main/java/com/guitteum/
 │   ├── chat/     # entity/ repository/ service/ dto/
 │   ├── speech/
 │   └── keyword/
-├── infra/        # 외부 시스템 연동 (OpenAI, Qdrant, ES, Redis). Config + Client
+├── infra/        # 외부 시스템 연동 (Gemini, Qdrant, ES, Redis). Config + Client
 ├── batch/        # Spring Batch. job/ reader/ processor/ writer/
 └── global/       # config/ exception/ common/
 ```
