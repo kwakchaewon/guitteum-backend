@@ -30,7 +30,8 @@ public class QdrantClientWrapper {
     @Value("${qdrant.collection-name}")
     private String collectionName;
 
-    private static final int VECTOR_SIZE = 1536;
+    @Value("${qdrant.vector-size}")
+    private int vectorSize;
 
     public void createCollectionIfNotExists() {
         try {
@@ -38,7 +39,7 @@ public class QdrantClientWrapper {
             if (!exists) {
                 qdrantClient.createCollectionAsync(collectionName,
                         Collections.VectorParams.newBuilder()
-                                .setSize(VECTOR_SIZE)
+                                .setSize(vectorSize)
                                 .setDistance(Collections.Distance.Cosine)
                                 .build()
                 ).get();
