@@ -21,6 +21,9 @@ data-go:
   mcp-command: py
   mcp-args: -m guitteum_mcp
 
+gemini:
+  api-key: ${GEMINI_API_KEY:}
+
 qdrant:
   host: localhost
   port: 6334

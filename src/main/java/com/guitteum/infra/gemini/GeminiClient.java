@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import jakarta.annotation.PostConstruct;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -38,6 +40,15 @@ public class GeminiClient {
     @Value("${gemini.base-url}")
     private String baseUrl;
 
+    @PostConstruct
+    void init() {
+        if (apiKey == null || apiKey.isBlank()) {
+            log.warn("GEMINI_API_KEY is not set! All Gemini API calls will fail with 403.");
+        } else {
+            log.info("Gemini API key loaded (length={})", apiKey.length());
+        }
+    }
+
     // ===== Public API =====
 
     public float[] embed(String text) {
@@ -55,7 +66,10 @@ public class GeminiClient {
         BatchEmbedRequest request = new BatchEmbedRequest(requests);
 
         BatchEmbedResponse response = geminiRestClient.post()
-                .uri("/models/{model}:batchEmbedContents?key={key}", embeddingModel, apiKey)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/models/{model}:batchEmbedContents")
+                        .queryParam("key", apiKey)
+                        .build(embeddingModel))
                 .body(request)
                 .retrieve()
                 .body(BatchEmbedResponse.class);
@@ -75,7 +89,10 @@ public class GeminiClient {
         GenerateContentRequest request = buildChatRequest(messages);
 
         GenerateContentResponse response = geminiRestClient.post()
-                .uri("/models/{model}:generateContent?key={key}", chatModel, apiKey)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/models/{model}:generateContent")
+                        .queryParam("key", apiKey)
+                        .build(chatModel))
                 .body(request)
                 .retrieve()
                 .body(GenerateContentResponse.class);
