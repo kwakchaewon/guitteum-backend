@@ -22,7 +22,7 @@ public class SpeechItemReaderConfig {
         return new RepositoryItemReaderBuilder<Speech>()
                 .name("speechItemReader")
                 .repository(speechRepository)
-                .methodName("findAll")
+                .methodName("findByEmbeddedFalse")
                 .pageSize(10)
                 .sorts(Map.of("id", Sort.Direction.ASC))
                 .build();

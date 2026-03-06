@@ -1,7 +1,9 @@
 package com.guitteum.batch.writer;
 
+import com.guitteum.domain.speech.entity.Speech;
 import com.guitteum.domain.speech.entity.SpeechChunk;
 import com.guitteum.domain.speech.repository.SpeechChunkRepository;
+import com.guitteum.domain.speech.repository.SpeechRepository;
 import com.guitteum.infra.gemini.GeminiClient;
 import com.guitteum.infra.qdrant.QdrantClientWrapper;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +20,12 @@ import java.util.List;
 public class EmbeddingWriter implements ItemWriter<List<SpeechChunk>> {
 
     private final SpeechChunkRepository speechChunkRepository;
+    private final SpeechRepository speechRepository;
     private final GeminiClient geminiClient;
     private final QdrantClientWrapper qdrantClientWrapper;
 
     @Override
     public void write(Chunk<? extends List<SpeechChunk>> items) {
-        qdrantClientWrapper.createCollectionIfNotExists();
-
         for (List<SpeechChunk> chunks : items) {
             // 1. DB에 청크 저장
             List<SpeechChunk> savedChunks = speechChunkRepository.saveAll(chunks);
@@ -52,8 +53,16 @@ public class EmbeddingWriter implements ItemWriter<List<SpeechChunk>> {
                         chunk.getSpeechId(), vectorId);
             }
 
-            log.info("Processed {} chunks for speechId={}", savedChunks.size(),
-                    savedChunks.isEmpty() ? "?" : savedChunks.get(0).getSpeechId());
+            // 4. Speech를 임베딩 완료로 마킹
+            if (!savedChunks.isEmpty()) {
+                Long speechId = savedChunks.get(0).getSpeechId();
+                speechRepository.findById(speechId).ifPresent(speech -> {
+                    speech.markEmbedded();
+                    speechRepository.save(speech);
+                });
+
+                log.info("Processed {} chunks for speechId={}", savedChunks.size(), speechId);
+            }
         }
     }
 }

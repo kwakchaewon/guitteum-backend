@@ -35,6 +35,9 @@ public class Speech {
     @Column(length = 50)
     private String category;
 
+    @Column(nullable = false)
+    private boolean embedded;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -43,6 +46,10 @@ public class Speech {
 
     public void updateCategory(String category) {
         this.category = category;
+    }
+
+    public void markEmbedded() {
+        this.embedded = true;
     }
 
     @PrePersist

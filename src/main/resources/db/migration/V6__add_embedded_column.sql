@@ -1,0 +1,2 @@
+ALTER TABLE speeches
+    ADD COLUMN embedded TINYINT(1) NOT NULL DEFAULT 0 AFTER speaker;
