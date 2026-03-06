@@ -40,7 +40,7 @@ qdrant:
   host: ${QDRANT_HOST:localhost}
   port: ${QDRANT_PORT:6334}
   collection-name: speech_vectors
-  vector-size: 768
+  vector-size: 3072
 
 data-go:
   api-key: ${DATA_GO_API_KEY:}
@@ -49,10 +49,9 @@ data-go:
 
 gemini:
   api-key: ${GEMINI_API_KEY:}
-  embedding-model: text-embedding-004
+  embedding-model: gemini-embedding-001
   chat-model: gemini-2.5-flash-lite
   base-url: https://generativelanguage.googleapis.com/v1beta
-  embedding-base-url: https://generativelanguage.googleapis.com/v1
 
 server:
   port: 8080
